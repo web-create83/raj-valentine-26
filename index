@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* ---------- COMMON ---------- */
+body{
+    margin:0;
+    height:100vh;
+    font-family:Arial,sans-serif;
+    overflow:hidden;
+    text-align:center;
+}
+
+/* Fade utility */
+.fade{
+    transition:opacity 1s ease;
+}
+
+/* ---------- PAGE 1 ---------- */
+#page1{
+    height:100vh;
+    background:linear-gradient(to bottom,#ff9a9e,#fad0c4);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    opacity:1;
+}
+
+.container{position:relative;}
+h1{color:#b30059;}
+
+.buttons{
+    margin-top:30px;
+    position:relative;
+}
+
+#hintText{
+    margin-bottom:12px;
+    font-size:15px;
+    color:#800040;
+    font-weight:600;
+    animation:blink 1.5s infinite;
+}
+
+@keyframes blink{
+    50%{opacity:0.4;}
+}
+
+.btn{
+    padding:14px 32px;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    transition:transform 0.3s;
+}
+
+#yesBtn{background:#ff3366;color:white;}
+#noBtn{background:#555;color:white;}
+
+#noContainer{
+    display:inline-block;
+    position:absolute;
+    margin-left:20px;
+}
+
+#msg{
+    margin-top:8px;
+    font-size:17px;
+    color:#800040;
+    font-weight:600;
+}
+
+/* ---------- PAGE 2 ---------- */
+#page2{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    height:100vh;
+    background:radial-gradient(circle at top,#ff9ab3,#ff5c8a,#b0004b);
+    color:white;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    opacity:0;
+    pointer-events:none;
+}
+
+.glow{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:500px;
+    height:500px;
+    background:radial-gradient(circle,rgba(255,255,255,0.25),transparent 70%);
+    filter:blur(40px);
+}
+
+#page2 h1{
+    margin-top:40px;
+    font-size:38px;
+    background:linear-gradient(45deg,#ffd700,#fff,#ffd700);
+    -webkit-background-clip:text;
+    color:transparent;
+    text-shadow:0 0 20px rgba(255,215,0,0.6);
+}
+
+.big-heart{
+    font-size:120px;
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    50%{transform:scale(1.15);}
+}
+
+#slide{
+    width:280px;
+    border-radius:22px;
+    margin-top:20px;
+    box-shadow:0 0 40px rgba(255,255,255,0.4);
+}
+
+/* Floating hearts */
+.heart{
+    position:fixed;
+    bottom:-10px;
+    font-size:22px;
+    animation:float 7s linear infinite;
+}
+@keyframes float{
+    to{transform:translateY(-110vh);opacity:0;}
+}
+
+/* Sparkle */
+.sparkle{
+    position:fixed;
+    width:6px;
+    height:6px;
+    background:white;
+    border-radius:50%;
+    animation:twinkle 2s ease-out forwards;
+}
+@keyframes twinkle{
+    to{transform:scale(0);opacity:0;}
+}
+
+/* Confetti */
+.confetti{
+    position:fixed;
+    width:8px;
+    height:14px;
+    top:-20px;
+    animation:fall 3s linear forwards;
+}
+@keyframes fall{
+    to{transform:translateY(110vh) rotate(360deg);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div id="page1" class="fade">
+  <div class="container">
+    <h1>KODIMALAR 💕</h1>
+    <h2>Will you be my Valentine?</h2>
+    <p>– Raj 💌</p>
+
+    <div class="buttons">
+
+      <p id="hintText">Sorry you can't click NO, if you want try it 😜</p>
+
+      <button id="yesBtn" class="btn">Yes 💖</button>
+
+      <div id="noContainer">
+        <button id="noBtn" class="btn">No</button>
+        <div id="msg"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2" class="fade">
+  <div class="glow"></div>
+  <h1>KRISHNA RAJ ❤️ KODIMALAR</h1>
+  <h2>என்றும் உன்னோடு… Forever & Always 💍</h2>
+  <div class="big-heart">❤️</div>
+  <img id="slide" src="https://media.tenor.com/zhnbS6DI_60AAAAi/djnitish97-hug.gif">
+</div>
+
+<script>
+/* ---------- NO BUTTON ---------- */
+const messages=[
+ "Please don't do this 💭",
+ "I am yours ❤️",
+ "Sorry, you can't select NO 😆"
+];
+
+let i=0,noScale=1,yesScale=1;
+
+const noContainer=document.getElementById("noContainer");
+const msg=document.getElementById("msg");
+const noBtn=document.getElementById("noBtn");
+const yesBtn=document.getElementById("yesBtn");
+
+noContainer.onclick=()=>{
+    noContainer.style.position="fixed";
+    noContainer.style.left=Math.random()*(innerWidth-200)+"px";
+    noContainer.style.top=Math.random()*(innerHeight-200)+"px";
+    msg.innerText=messages[i++ % messages.length];
+
+    noScale-=0.15;
+    yesScale+=0.15;
+    noBtn.style.transform=`scale(${noScale})`;
+    yesBtn.style.transform=`scale(${yesScale})`;
+};
+
+/* ---------- YES CLICK ---------- */
+yesBtn.onclick=()=>{
+    if(navigator.vibrate){
+        navigator.vibrate([200,100,200]);
+    }
+
+    const p1=document.getElementById("page1");
+    const p2=document.getElementById("page2");
+
+    p1.style.opacity=0;
+
+    setTimeout(()=>{
+        p1.style.display="none";
+        p2.style.pointerEvents="auto";
+        p2.style.opacity=1;
+        startEffects();
+    },1000);
+};
+
+/* ---------- EFFECTS ---------- */
+function startEffects(){
+    setInterval(()=>{
+        const h=document.createElement("div");
+        h.className="heart";
+        h.innerText="❤️";
+        h.style.left=Math.random()*100+"vw";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),7000);
+    },300);
+
+    setInterval(()=>{
+        const s=document.createElement("div");
+        s.className="sparkle";
+        s.style.left=Math.random()*100+"vw";
+        s.style.top=Math.random()*100+"vh";
+        document.body.appendChild(s);
+        setTimeout(()=>s.remove(),2000);
+    },400);
+
+    for(let i=0;i<160;i++){
+        const c=document.createElement("div");
+        c.className="confetti";
+        c.style.left=Math.random()*100+"vw";
+        c.style.background=`hsl(${Math.random()*360},100%,50%)`;
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),4000);
+    }
+}
+
+/* ---------- SLIDESHOW ---------- */
+const images=[
+ "https://media.tenor.com/__iEnCX1420AAAAm/i-love-you-love-you.webp",
+ "https://media.tenor.com/r21VpnHTN44AAAAM/i-love-you-love.gif",
+ "https://media.tenor.com/zhnbS6DI_60AAAAi/djnitish97-hug.gif"
+];
+let idx=0;
+const slide=document.getElementById("slide");
+
+setInterval(()=>{
+    idx=(idx+1)%images.length;
+    slide.src=images[idx];
+},3500);
+</script>
+
+</body>
+</html>
